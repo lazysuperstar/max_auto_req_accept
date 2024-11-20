@@ -21,7 +21,6 @@ Data = Cluster['users']
 Bot = Client(name='AutoAcceptBot', api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
        
 
-
 @Bot.on_message(filters.command("start") & filters.private)                    
 async def start_handler(c, m):
     user_id = m.from_user.id
@@ -72,7 +71,6 @@ async def broadcast(c, m):
     await m.reply_text(f"Broadcast Completed:\nCompleted in {time_taken} seconds.\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nFailed: {failed}", quote=True)
 
   
- 
 @Bot.on_chat_join_request()
 async def req_accept(c, m):
     user_id = m.from_user.id
