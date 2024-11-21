@@ -6,7 +6,7 @@ from os import environ as env
 import asyncio, datetime, time
 
 
-ACCEPTED_TEXT = "Hey {user}\n\nYour Request For {chat} Is Accepted ✅"
+ACCEPTED_TEXT = "Hey {user}\n\nYour Request For {chat} Is Accepted ✅\nSend /start to Get more Updates."
 START_TEXT = "Hai {}\n\nI am Auto Request Accept Bot With Working For All Channel. Add Me In Your Channel To Use"
 
 API_ID = int(env.get('API_ID'))
@@ -25,10 +25,10 @@ Bot = Client(name='AutoAcceptBot', api_id=API_ID, api_hash=API_HASH, bot_token=B
 async def start_handler(c, m):
     user_id = m.from_user.id
     if not await Data.find_one({'id': user_id}): await Data.insert_one({'id': user_id})
-    button = [[
+    lazydeveloper_btn = [[
         InlineKeyboardButton('🚀Updates', url='https://t.me/+M9YKDF84DXRmZDVl')
     ]]
-    return await m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(button))
+    return await m.reply_text(text=START_TEXT.format(m.from_user.mention), disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(lazydeveloper_btn))
           
 
 @Bot.on_message(filters.command(["broadcast", "users"]) & filters.user(ADMINS))  
@@ -77,8 +77,18 @@ async def req_accept(c, m):
     chat_id = m.chat.id
     if not await Data.find_one({'id': user_id}): await Data.insert_one({'id': user_id})
     await c.approve_chat_join_request(chat_id, user_id)
-    try: await c.send_message(user_id, ACCEPTED_TEXT.format(user=m.from_user.mention, chat=m.chat.title))
-    except Exception as e: print(e)
+    try: 
+        lazydeveloper_btn = [[
+        InlineKeyboardButton('🚀Updates', url='https://t.me/+M9YKDF84DXRmZDVl')
+        ]] 
+        await c.send_message(
+            user_id, 
+            ACCEPTED_TEXT.format(user=m.from_user.mention, chat=m.chat.title), 
+            disable_web_page_preview=True, 
+            reply_markup=InlineKeyboardMarkup(lazydeveloper_btn)
+            )
+    except Exception as e: 
+        print(e)
    
    
 
